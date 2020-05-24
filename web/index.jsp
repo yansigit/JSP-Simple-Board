@@ -2,7 +2,7 @@
 <%@ page import="yoon.web.mideterm.Member" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page errorPage="error.jsp" %>
-<jsp:useBean id="db" class="yoon.web.mideterm.DB" scope="page" />
+<jsp:useBean id="db" class="yoon.web.mideterm.DB" scope="session" />
 <html>
 <head>
     <title>게시판 목록</title>

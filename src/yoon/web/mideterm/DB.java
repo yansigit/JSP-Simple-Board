@@ -7,6 +7,64 @@ public class DB {
     Connection conn = null;
     PreparedStatement pstmt = null;
 
+    public DB() {
+        Connection setupConn = null;
+        Statement setupStmt = null;
+        try {
+            setupConn = DriverManager.getConnection("jdbc:mysql://localhost/mysql", "root", "1234");
+            setupStmt = setupConn.createStatement();
+            setupStmt.executeUpdate("CREATE DATABASE IF NOT EXISTS `midterm_board`");
+
+            setupConn.close();
+            setupStmt.close();
+
+            setupConn = DriverManager.getConnection("jdbc:mysql://localhost/midterm_board", "root", "1234");
+            setupStmt = setupConn.createStatement();
+
+            String tableSql = "CREATE TABLE IF NOT EXISTS `members` (\n" +
+                    "  `id` int NOT NULL AUTO_INCREMENT,\n" +
+                    "  `member_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,\n" +
+                    "  `member_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,\n" +
+                    "  `member_password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,\n" +
+                    "  PRIMARY KEY (`id`),\n" +
+                    "  UNIQUE KEY `member_id` (`member_id`)\n" +
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
+            setupStmt.executeUpdate(tableSql);
+
+
+            tableSql = "CREATE TABLE IF NOT EXISTS `posts` (\n" +
+                    "  `id` int unsigned NOT NULL AUTO_INCREMENT,\n" +
+                    "  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '기본 타이틀',\n" +
+                    "  `author` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '익명',\n" +
+                    "  `body` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,\n" +
+                    "  `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,\n" +
+                    "  `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,\n" +
+                    "  `views` int DEFAULT '0',\n" +
+                    "  PRIMARY KEY (`id`)\n" +
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
+            setupStmt.executeUpdate(tableSql);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if(setupConn != null) {
+                try {
+                    setupConn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(setupStmt != null) {
+                try {
+                    setupStmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+
     void connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

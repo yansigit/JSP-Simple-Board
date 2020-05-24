@@ -1,7 +1,7 @@
 <%@ page import="yoon.web.mideterm.Member" %>
 <%@ page import="yoon.web.mideterm.Post"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="error.jsp" %>
-<jsp:useBean id="db" class="yoon.web.mideterm.DB" />
+<jsp:useBean id="db" class="yoon.web.mideterm.DB" scope="session" />
 <%
     Member member = (Member) session.getAttribute("member");
     if (member == null) {

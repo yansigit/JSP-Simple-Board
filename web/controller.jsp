@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<%@ page import="java.sql.Timestamp" %>
-<jsp:useBean id="db" class="yoon.web.mideterm.DB" scope="page" />
+<%@ page import="java.sql.Timestamp" errorPage="error.jsp" %>
+<jsp:useBean id="db" class="yoon.web.mideterm.DB" scope="session" />
 <jsp:useBean id="post" class="yoon.web.mideterm.Post" scope="page" />
 <jsp:useBean id="member" class="yoon.web.mideterm.Member" />
 
